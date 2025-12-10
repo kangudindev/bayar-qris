@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Setup QRIS - Konfigurasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- jsQR Library for QR Code Scanning -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            min-height: 100vh;
+            /* Fallback */
+            min-height: 100dvh;
+            width: 100%;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+
+        .setup-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 24px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .form-section {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .input-hint {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline-custom {
+            background: white;
+            border: 2px solid #e5e7eb;
+            color: #374151;
+            padding: 8px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+
+        .btn-outline-custom:hover {
+            background: #f9fafb;
+            border-color: #667eea;
+        }
+
+        .btn-group-custom {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-group-custom button {
+            flex: 1;
+        }
+
+        /* Icon spacing in buttons */
+        .btn-group-custom button i {
+            margin-right: 4px;
+        }
+
+        .qr-input-group {
+            margin-top: 12px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: #f9fafb;
+        }
+
+        .file-upload-area.active {
+            border-color: #667eea;
+            background: #eff6ff;
+        }
+
+        .alert-custom {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            color: #1e40af;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="header-title">
+            <h1>🔒 Login Setup</h1>
+            <!-- <div class="header-subtitle">Masukkan kredensial untuk mengakses setup</div> -->
+        </div>
+
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="loginUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="loginUsername" placeholder="Masukkan username" required
+                    autocomplete="off">
+            </div>
+
+            <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" placeholder="Masukkan password" required
+                    autocomplete="off">
+            </div>
+
+            <div id="loginError" class="alert-custom"
+                style="display:none; background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; margin-bottom:16px;">
+                ❌ Username atau password salah!
+            </div>
+
+            <button type="submit" class="btn-primary-custom">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </button>
+        </form>
+
+        <a href="index.html" class="back-link" style="margin-top:20px; display:inline-flex;">← Kembali ke Aplikasi</a>
+    </div>
+
+    <!-- Setup Container (Hidden by default) -->
+    <div class="setup-container" id="setupContainer" style="display:none;">
+        <!-- Header -->
+        <a href="index.html" class="back-link">← Kembali ke Aplikasi</a>
+
+        <div class="header-title">
+            <h1>⚙️ Setup Konfigurasi QRIS</h1>
+            <!-- <div class="header-subtitle">Atur semua parameter aplikasi QRIS Anda</div> -->
+        </div>
+
+        <!-- Alert Info -->
+        <!-- <div class="alert-custom alert-info">
+            💡 <strong>Info:</strong> Konfigurasi akan disimpan di browser Anda dan tetap ada hingga Anda reset atau
+            clear browser data.
+        </div> -->
+
+        <!-- Form -->
+        <form id="setupForm">
+
+            <!-- QRIS Static Data -->
+            <div class="form-section">
+                <div class="section-title">📱 Data QRIS Statis</div>
+
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="qrTypeString" name="qrType" value="string" checked>
+                        <label for="qrTypeString">Paste String QRIS</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="qrTypeImage" name="qrType" value="image">
+                        <label for="qrTypeImage">Upload Gambar QR</label>
+                    </div>
+                </div>
+
+                <div class="qr-input-group" id="qrStringGroup">
+                    <label for="qrisString" class="form-label">QRIS Payload String</label>
+                    <textarea class="form-control" id="qrisString" placeholder="0002010102..." required></textarea>
+                    <small class="input-hint">Paste (ctrl + v) string payload QRIS statis Anda</small>
+
+                    <!-- Auto-detected Merchant Name -->
+                    <div id="merchantNameDetected"
+                        style="margin-top:12px; padding:12px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px; display:none;">
+                        <div style="font-size:12px; color:#166534; font-weight:600; margin-bottom:4px;">
+                            <i class="bi bi-check-circle-fill"></i> Merchant Name :
+                        </div>
+                        <div id="merchantNameValue" style="font-size:14px; color:#15803d; font-weight:500;"></div>
+                    </div>
+                </div>
+
+                <div class="qr-input-group" id="qrImageGroup" style="display:none;">
+                    <label class="form-label">Upload Gambar QR Code</label>
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <input type="file" id="qrImageFile" accept="image/*" style="display:none;">
+                        <div>📤 Klik atau drag & drop gambar QR di sini</div>
+                        <small class="input-hint">Format: JPG, PNG (Max 2MB)</small>
+                    </div>
+                    <div id="uploadedImagePreview" style="margin-top:12px; display:none;">
+                        <img id="previewImage" style="max-width:200px; border-radius:8px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction Settings -->
+            <div class="form-section">
+                <div class="section-title">💰 Pengaturan Transaksi</div>
+
+                <div class="mb-3">
+                    <label for="minTransaction" class="form-label">Minimal Transaksi</label>
+                    <input type="text" class="form-control" id="minTransaction" placeholder="1" inputmode="numeric">
+                    <!-- <small class="input-hint">Nominal minimal untuk transaksi (gunakan separator ribuan)</small> -->
+                </div>
+            </div>
+
+            <!-- Service Fee Settings -->
+            <div class="form-section">
+                <div class="section-title">💳 Biaya Layanan</div>
+
+                <div class="mb-3">
+                    <label for="serviceFeeMin" class="form-label">Minimal Nominal untuk Biaya Layanan</label>
+                    <input type="text" class="form-control" id="serviceFeeMin" placeholder="500.000"
+                        inputmode="numeric">
+                    <!-- <small class="input-hint">Biaya layanan dikenakan jika transaksi >= nilai ini</small> -->
+                </div>
+
+                <div class="mb-3">
+                    <label for="serviceFeePercent" class="form-label">Persentase Biaya Layanan (%)</label>
+                    <input type="number" class="form-control" id="serviceFeePercent" placeholder="0.7" step="0.1"
+                        min="0" max="100">
+                    <!-- <small class="input-hint">Contoh: 0.7 untuk biaya 0.7%</small> -->
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group-custom">
+                <button type="submit" class="btn-primary-custom">
+                    <i class="bi bi-floppy"></i> Simpan Konfigurasi
+                </button>
+                <button type="button" class="btn-outline-custom" id="resetBtn">
+                    <i class="bi bi-arrow-clockwise"></i> Reset ke Default
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Setup Script -->
+    <script src="setup.js"></script>
+
+</body>
+
+</html>
