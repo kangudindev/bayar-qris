@@ -1,11 +1,23 @@
 {
-  "background_color": "#ffffff",
-  "dir": "ltr",
+  "name": "Bayar QRIS",
+  "short_name": "BayarQRIS",
+  "description": "Aplikasi demo pembayaran QRIS berbasis web.",
+  "start_url": "/bayar-qris/index.html",
+  "scope": "/bayar-qris/",
   "display": "standalone",
-  "name": "kangudindev.github",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "kangudindev.github",
-  "start_url": "/",
-  "theme_color": "#ac3939"
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#2196F3",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
