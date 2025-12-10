@@ -1,7 +1,7 @@
 {
   "name": "Bayar QRIS",
   "short_name": "BayarQRIS",
-  "description": "Aplikasi demo pembayaran QRIS berbasis web.",
+  "description": "Aplikasi pembayaran QRIS Dinamis.",
   "start_url": "/bayar-qris/index.html",
   "scope": "/bayar-qris/",
   "display": "standalone",
