@@ -370,7 +370,7 @@ async function generateQRIS(payAmount) {
 
         // Notifikasi suara untuk minimal transaksi
         const minText = formatNominalForSpeech(appConfig.minTransaction);
-        speakText(`Mohon maaf, nominal pembayaran q-ris harus lebih dari ${minText} rupiah, silakan masukkan nominal yang lebih besar, terima kasih.`);
+        speakText(`Mohon maaf, nominal pembayaran q-ris harus lebih dari ${minText} rupiah. Silakan masukkan nominal yang lebih besar. Terima kasih.`);
 
         return;
     } else {
@@ -432,11 +432,11 @@ async function generateQRIS(payAmount) {
         // Notifikasi suara setelah QRIS berhasil di-generate
         const nominalText = formatNominalForSpeech(totalAmount);
         const merchantName = document.getElementById('displayMerchantName').textContent;
-        let speechText = `Silakan scan q-ris pembayaran sejumlah ${nominalText} rupiah, terima kasih telah belanja di ${merchantName}`;
+        let speechText = `Silakan melakukan pembayaran dengan q-ris sebesar: ${nominalText} rupiah. Terima kasih telah belanja di ${merchantName}.`;
 
         // Tambahkan notifikasi biaya layanan jika ada
         if (needServiceFee) {
-            speechText += '. Pembayaran Anda sudah termasuk biaya layanan sebesar nol koma tujuh persen';
+            speechText += '. Pembayaran Anda sudah termasuk biaya layanan sebesar: nol koma tujuh persen';
         }
 
         speakText(speechText);
