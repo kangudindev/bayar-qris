@@ -47,15 +47,7 @@ let debounceTimer = null;
 let appConfig = null;
 
 // Default configuration (fallback)
-const DEFAULT_CONFIG = {
-    merchantName: 'SATE LOK-LOK KOREA',
-    qrisStatic: '00020101021126650013ID.CO.BCA.WWW011893600014000205735802150008850020573580303UMI51440014ID.CO.QRIS.WWW0215ID10232795448530303UMI5204581453033605802ID5918SATE LOK LOK KOREA6006MALANG61056515362070703A0163047EA0',
-    minTransaction: 1,
-    serviceFee: {
-        minAmount: 500000,
-        percentage: 0.7
-    }
-};
+// Default configuration is now loaded from rawon.js
 
 // Load configuration from localStorage
 function loadConfig() {
@@ -108,6 +100,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener untuk input nominal dengan thousand separator
     const nominalInput = document.getElementById('nominalInput');
+
+    // Prevent non-numeric input on keydown (for laptop/desktop)
+    nominalInput.addEventListener('keydown', function (e) {
+        // Allow: backspace, delete, tab, escape, enter
+        if ([46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 ||
+            // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            (e.ctrlKey === true && [65, 67, 86, 88].indexOf(e.keyCode) !== -1) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
     nominalInput.addEventListener('input', function (e) {
         // Format dengan separator ribuan

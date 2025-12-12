@@ -28,7 +28,7 @@
     <!-- Login Container -->
     <div class="login-container" id="loginContainer">
         <div class="header-title">
-            <h1>🔒 Login Setup</h1>
+            <h1>🔒 LOGIN SETUP</h1>
             <!-- <div class="header-subtitle">Masukkan kredensial untuk mengakses setup</div> -->
         </div>
 
@@ -36,13 +36,19 @@
             <div class="mb-3">
                 <label for="loginUsername" class="form-label">Username</label>
                 <input type="text" class="form-control" id="loginUsername" placeholder="Masukkan username" required
-                    autocomplete="off">
+                    autocomplete="off" autofocus>
             </div>
 
             <div class="mb-3">
                 <label for="loginPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="loginPassword" placeholder="Masukkan password" required
-                    autocomplete="off">
+                <div class="input-group">
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Masukkan password"
+                        required autocomplete="off">
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword"
+                        style="border-color: #e2e8f0;">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
 
             <div id="loginError" class="alert-custom"
@@ -61,10 +67,10 @@
     <!-- Setup Container (Hidden by default) -->
     <div class="setup-container" id="setupContainer" style="display:none;">
         <!-- Header -->
-        <a href="index.html" class="back-link">← Kembali ke Aplikasi</a>
+        <!-- <a href="index.html" class="back-link">← Kembali ke Aplikasi</a> -->
 
         <div class="header-title">
-            <h1>⚙️ Setup Konfigurasi QRIS</h1>
+            <h1>⚙️ SETUP QRIS</h1>
             <!-- <div class="header-subtitle">Atur semua parameter aplikasi QRIS Anda</div> -->
         </div>
 
@@ -73,6 +79,9 @@
             💡 <strong>Info:</strong> Konfigurasi akan disimpan di browser Anda dan tetap ada hingga Anda reset atau
             clear browser data.
         </div> -->
+
+        <!-- Message Container for Notifications -->
+        <div id="messageContainer" class="mb-3"></div>
 
         <!-- Form -->
         <form id="setupForm">
@@ -165,7 +174,7 @@
 
     <!-- Config Script -->
     <script src="rawon.js"></script>
-    <script src="setup.js"></script>
+    <script src="pecel.js"></script>
 
 </body>
 

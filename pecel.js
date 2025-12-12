@@ -137,6 +137,25 @@ function initializeLogin() {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
+
+    // Toggle Password Visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('loginPassword');
+
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function () {
+            // Toggle type
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle icon
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('bi-eye');
+                icon.classList.toggle('bi-eye-slash');
+            }
+        });
+    }
 }
 
 // ============================================
@@ -144,15 +163,7 @@ function initializeLogin() {
 // ============================================
 
 // Default configuration
-const DEFAULT_CONFIG = {
-    merchantName: 'SATE LOK-LOK KOREA',
-    qrisStatic: '00020101021126650013ID.CO.BCA.WWW011893600014000205735802150008850020573580303UMI51440014ID.CO.QRIS.WWW0215ID10232795448530303UMI5204581453033605802ID5918SATE LOK LOK KOREA6006MALANG61056515362070703A0163047EA0',
-    minTransaction: 1,
-    serviceFee: {
-        minAmount: 500000,
-        percentage: 0.7
-    }
-};
+// Default configuration is now loaded from rawon.js
 
 // ============================================
 // QRIS PARSER
@@ -206,8 +217,30 @@ function parseQRISString(qrisString) {
 }
 
 // ============================================
-// UTILITY FUNCTIONS
+// Utility Functions
 // ============================================
+
+// Show message notification
+function showMessage(text, type = 'info') {
+    const messageContainer = document.getElementById('messageContainer');
+    if (!messageContainer) return;
+
+    const alertClass = type === 'success' ? 'alert-success' :
+        type === 'error' ? 'alert-danger' : 'alert-info';
+
+    // Create alert element
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${alertClass} alert-dismissible fade show`;
+    alertDiv.role = 'alert';
+    alertDiv.innerHTML = `
+        ${text}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    // Clear previous messages
+    messageContainer.innerHTML = '';
+    messageContainer.appendChild(alertDiv);
+}
 
 // Format number with thousand separator
 function formatThousandSeparator(value) {
@@ -382,7 +415,10 @@ function handleSubmit(e) {
 
         // Save to localStorage
         if (saveConfig(config)) {
-            alert('✅ Konfigurasi berhasil disimpan!\n\nSilakan kembali ke aplikasi untuk melihat perubahan.');
+            showMessage('✅ Konfigurasi berhasil disimpan! Mengalihkan...', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
         }
     } catch (error) {
         console.error('Error in handleSubmit:', error);
@@ -395,7 +431,10 @@ function handleReset() {
     if (confirm('Yakin ingin reset ke konfigurasi default?')) {
         saveConfig(DEFAULT_CONFIG);
         populateForm();
-        alert('✅ Konfigurasi berhasil direset ke default!');
+        showMessage('✅ Konfigurasi berhasil direset! Mengalihkan...', 'success');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
     }
 }
 

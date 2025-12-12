@@ -1,0 +1,16 @@
+const SETUP_CONFIG = {
+    setupCredentials: {
+        username: "admin",
+        password: "admin123"
+    }
+};
+
+const DEFAULT_CONFIG = {
+    merchantName: 'SATE LOK-LOK KOREA',
+    qrisStatic: '00020101021126650013ID.CO.BCA.WWW011893600014000205735802150008850020573580303UMI51440014ID.CO.QRIS.WWW0215ID10232795448530303UMI5204581453033605802ID5918SATE LOK LOK KOREA6006MALANG61056515362070703A0163047EA0',
+    minTransaction: 1,
+    serviceFee: {
+        minAmount: 500000,
+        percentage: 0.7
+    }
+};

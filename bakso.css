@@ -26,8 +26,9 @@
         height: 300px;
         background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         clip-path: polygon(0 0, 100% 0, 0 100%);
-        z-index: 0;
+        z-index: 2;
         opacity: 0.9;
+        pointer-events: none;
     }
 
     body::after {
@@ -39,8 +40,9 @@
         height: 300px;
         background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         clip-path: polygon(100% 0, 100% 100%, 0 100%);
-        z-index: 0;
+        z-index: 2;
         opacity: 0.9;
+        pointer-events: none;
     }
 
     /* QR Pattern Watermark */
